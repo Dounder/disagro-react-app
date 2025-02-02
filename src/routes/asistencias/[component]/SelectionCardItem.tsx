@@ -5,7 +5,7 @@ interface Props {
   price: string;
 }
 
-export default function SelectionItem({ id, value, name, price }: Props) {
+export default function SelectionCardItem({ id, value, name, price }: Props) {
   return (
     <div className="flex justify-start items-center gap-2 w-full h-12 hover:bg-gray-200/50 rounded-md transition-all duration-200 ease-in-out px-8">
       <input

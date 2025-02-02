@@ -3,7 +3,7 @@ import RightArrow from '@/icons/RightArrow';
 import RegistrationCard from './AttendeeInfoCard';
 import FormSection from './FormSection';
 import FormStepHeader from './FormStepHeader';
-import InterestSelectionCard from './InterestSelectionCard';
+import SelectionCard from './SelectionCard';
 
 export default function Form() {
   return (
@@ -14,7 +14,7 @@ export default function Form() {
       </FormSection>
       <FormSection>
         <FormStepHeader step={2} title="Seleccione Servicios y Productos de su interés" />
-        <InterestSelectionCard />
+        <SelectionCard />
       </FormSection>
       <section className="col-span-full flex justify-end">
         <CustomBtn
