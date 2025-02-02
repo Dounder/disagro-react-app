@@ -10,4 +10,4 @@ Este es el Frontend de la prueba técnica de la empresa [**_Disagro_**](https://
 4. Ejecuta `bun install` para instalar las dependencias
 5. Ejecuta `docker compose -f compose.backend.yml up -d` para iniciar los contendores del backend y base de datos
 6. Ejecuta `bun dev` para iniciar el servidor de desarrollo
-7. Abre tu navegador en `http://localhost:3000`
+7. Abre tu navegador en `http://localhost:5173`
