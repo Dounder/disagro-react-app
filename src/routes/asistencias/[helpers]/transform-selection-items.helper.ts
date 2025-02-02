@@ -1,9 +1,9 @@
 import { ProductList } from '@/routes/productos/[interfaces]';
 import { ServiceList } from '@/routes/servicios/[interfaces]';
-import { ItemSelection } from '../[interfaces]';
+import { SelectionItem } from '../[interfaces]';
 
-export const transformSelectionItems = (products: ProductList[], services: ServiceList[]): ItemSelection[] => {
-  const productsItems: ItemSelection[] = products.map((product) => ({
+export const transformSelectionItems = (products: ProductList[], services: ServiceList[]): SelectionItem[] => {
+  const productsItems: SelectionItem[] = products.map((product) => ({
     id: `p_${product.id}`,
     value: product.id,
     name: product.name,
@@ -11,7 +11,7 @@ export const transformSelectionItems = (products: ProductList[], services: Servi
     type: 'producto',
   }));
 
-  const servicesItems: ItemSelection[] = services.map((service) => ({
+  const servicesItems: SelectionItem[] = services.map((service) => ({
     id: `s_${service.id}`,
     value: service.id,
     name: service.name,

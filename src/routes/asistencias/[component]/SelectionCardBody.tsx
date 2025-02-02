@@ -1,12 +1,12 @@
 import React from 'react';
 
 import CustomLoader from '@/components/CustomLoader';
-import { ItemSelection } from '../[interfaces]';
+import { SelectionItem } from '../[interfaces]';
 import SelectionCardItem from './SelectionCardItem';
 
 interface Props {
   loading: boolean;
-  items: ItemSelection[];
+  items: SelectionItem[];
 }
 
 export default function SelectionCardBody({ loading: isLoading, items }: Props) {

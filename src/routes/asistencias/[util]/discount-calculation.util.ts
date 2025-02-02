@@ -1,8 +1,8 @@
 import { DISCOUNT_RULES } from '../[helpers]';
-import { ItemsDiscounts, ItemSelection } from '../[interfaces]';
+import { ItemsDiscounts, SelectionItem } from '../[interfaces]';
 
 export class DiscountCalculation {
-  static calculateTotal = (products: ItemSelection[], services: ItemSelection[]): ItemsDiscounts => {
+  static calculateTotal = (products: SelectionItem[], services: SelectionItem[]): ItemsDiscounts => {
     const productsDiscountRate = this.calculateProducts(products);
     const servicesDiscountRate = this.calculateServices(services);
 
@@ -14,13 +14,13 @@ export class DiscountCalculation {
     return applicableDiscount?.discount || 0;
   };
 
-  static calculateProducts = (products: ItemSelection[]): number => {
+  static calculateProducts = (products: SelectionItem[]): number => {
     const discount = this.calculateDiscount(products.length);
 
     return discount * 100;
   };
 
-  static calculateServices = (services: ItemSelection[]): number => {
+  static calculateServices = (services: SelectionItem[]): number => {
     const totalServices = services.reduce((acc, { price }) => acc + Number(price), 0);
     const discount = this.calculateDiscount(services.length, totalServices);
 

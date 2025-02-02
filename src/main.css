@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/line-clamp';
 
 @theme {
   --color-primary: #374151;

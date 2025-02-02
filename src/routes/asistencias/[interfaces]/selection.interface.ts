@@ -1,6 +1,6 @@
 export type ItemType = 'producto' | 'servicio';
 
-export interface ItemSelection {
+export interface SelectionItem {
   id: string;
   value: any;
   name: string;
