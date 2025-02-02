@@ -1,10 +1,6 @@
-'use client';
-
 import CustomInput from '@/components/CustomInput';
 import { useAttendanceStore } from '../[stores]';
 import FormCard from './FormCard';
-import { useLayoutEffect } from 'react';
-import { api } from '@/api';
 
 export default function AttendeeInfoCard() {
   const firstName = useAttendanceStore((state) => state.firstName);
@@ -16,10 +12,6 @@ export default function AttendeeInfoCard() {
   const setLastName = useAttendanceStore((state) => state.setLastName);
   const setEmail = useAttendanceStore((state) => state.setEmail);
   const setAttendanceDate = useAttendanceStore((state) => state.setAttendanceDate);
-
-  useLayoutEffect(() => {
-    api.get('/health');
-  });
 
   return (
     <FormCard>

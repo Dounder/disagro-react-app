@@ -2,7 +2,7 @@ interface Props {
   id: string;
   value: string;
   name: string;
-  price: number;
+  price: string;
 }
 
 export default function SelectionItem({ id, value, name, price }: Props) {
