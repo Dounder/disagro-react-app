@@ -8,7 +8,7 @@ export const transformSelectionItems = (products: ProductList[], services: Servi
     value: product.id,
     name: product.name,
     price: product.price,
-    type: 'product',
+    type: 'producto',
   }));
 
   const servicesItems: ItemSelection[] = services.map((service) => ({
@@ -16,7 +16,7 @@ export const transformSelectionItems = (products: ProductList[], services: Servi
     value: service.id,
     name: service.name,
     price: service.price,
-    type: 'service',
+    type: 'servicio',
   }));
 
   return [...productsItems, ...servicesItems];
