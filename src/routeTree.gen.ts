@@ -12,6 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as ServiciosIndexImport } from './routes/servicios/index'
+import { Route as ProductosIndexImport } from './routes/productos/index'
 import { Route as AsistenciasIndexImport } from './routes/asistencias/index'
 
 // Create/Update Routes
@@ -19,6 +21,18 @@ import { Route as AsistenciasIndexImport } from './routes/asistencias/index'
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ServiciosIndexRoute = ServiciosIndexImport.update({
+  id: '/servicios/',
+  path: '/servicios/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProductosIndexRoute = ProductosIndexImport.update({
+  id: '/productos/',
+  path: '/productos/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,6 +60,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AsistenciasIndexImport
       parentRoute: typeof rootRoute
     }
+    '/productos/': {
+      id: '/productos/'
+      path: '/productos'
+      fullPath: '/productos'
+      preLoaderRoute: typeof ProductosIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/servicios/': {
+      id: '/servicios/'
+      path: '/servicios'
+      fullPath: '/servicios'
+      preLoaderRoute: typeof ServiciosIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +82,46 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/asistencias': typeof AsistenciasIndexRoute
+  '/productos': typeof ProductosIndexRoute
+  '/servicios': typeof ServiciosIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/asistencias': typeof AsistenciasIndexRoute
+  '/productos': typeof ProductosIndexRoute
+  '/servicios': typeof ServiciosIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/asistencias/': typeof AsistenciasIndexRoute
+  '/productos/': typeof ProductosIndexRoute
+  '/servicios/': typeof ServiciosIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/asistencias'
+  fullPaths: '/' | '/asistencias' | '/productos' | '/servicios'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/asistencias'
-  id: '__root__' | '/' | '/asistencias/'
+  to: '/' | '/asistencias' | '/productos' | '/servicios'
+  id: '__root__' | '/' | '/asistencias/' | '/productos/' | '/servicios/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AsistenciasIndexRoute: typeof AsistenciasIndexRoute
+  ProductosIndexRoute: typeof ProductosIndexRoute
+  ServiciosIndexRoute: typeof ServiciosIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AsistenciasIndexRoute: AsistenciasIndexRoute,
+  ProductosIndexRoute: ProductosIndexRoute,
+  ServiciosIndexRoute: ServiciosIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +135,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/asistencias/"
+        "/asistencias/",
+        "/productos/",
+        "/servicios/"
       ]
     },
     "/": {
@@ -105,6 +145,12 @@ export const routeTree = rootRoute
     },
     "/asistencias/": {
       "filePath": "asistencias/index.tsx"
+    },
+    "/productos/": {
+      "filePath": "productos/index.tsx"
+    },
+    "/servicios/": {
+      "filePath": "servicios/index.tsx"
     }
   }
 }
