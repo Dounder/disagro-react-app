@@ -16,3 +16,11 @@ dist/
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+# env
+.env
+.env.*
+!.env.template
+
+# db volumes
+data/
