@@ -20,7 +20,7 @@ dist/
 # env
 .env
 .env.*
-!.env.template
+!.env.*.template
 
 # db volumes
 data/
