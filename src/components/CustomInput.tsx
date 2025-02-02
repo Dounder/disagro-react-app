@@ -13,13 +13,13 @@ interface Props {
 export default function CustomInput({ label, type = 'text', id, placeholder, value, onChange, error }: Props) {
   return (
     <div className="w-full">
-      <label htmlFor={id} className="block mb-2 text-2xl font-bold text-gray-900">
+      <label htmlFor={id} className="block mb-2 text-xl font-bold text-gray-900">
         {label}
       </label>
       <input
         type={type}
         id={id}
-        className={`border-[2px] border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full py-4 px-6 transition-all duration-300 ease-in-out ${
+        className={`border-[2px] border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full py-2 px-4 transition-all duration-300 ease-in-out ${
           error ? 'border-red-500' : ''
         }`}
         placeholder={placeholder}

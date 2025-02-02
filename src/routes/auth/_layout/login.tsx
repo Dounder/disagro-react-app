@@ -1,14 +1,15 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { FormEvent, useEffect, useState } from 'react';
+import { ZodError } from 'zod';
 
 import CustomBtn from '@/components/CustomBtn';
 import CustomInput from '@/components/CustomInput';
+import { useNotification } from '@/hooks';
 import LeftArrow from '@/icons/LeftArrow';
 import RightArrow from '@/icons/RightArrow';
-import { loginDto, loginSchema } from '../[schemas]';
-import { ZodError } from 'zod';
 import { useLogin } from '../[hooks]';
-import { useNotification } from '@/hooks';
+import { loginDto, loginSchema } from '../[schemas]';
+import { useAuthStore } from '../[store]/auth.store';
 
 export const Route = createFileRoute('/auth/_layout/login')({
   component: RouteComponent,
@@ -17,7 +18,8 @@ export const Route = createFileRoute('/auth/_layout/login')({
 function RouteComponent() {
   const navigate = useNavigate();
   const { showLoading, showSuccess, dismissNotification } = useNotification();
-  const { mutate, isSuccess, isPending } = useLogin();
+  const { data, mutate, isSuccess, isPending } = useLogin();
+  const setAuth = useAuthStore((state) => state.setAuth);
 
   const [login, setLogin] = useState<loginDto>({ email: '', password: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -65,8 +67,9 @@ function RouteComponent() {
   }, [isPending]);
 
   useEffect(() => {
-    if (isSuccess) {
-      showSuccess('Inicio de sesión exitoso');
+    if (isSuccess && data) {
+      setAuth(data);
+      showSuccess({ text: 'Inicio de sesión exitoso' });
       setTimeout(() => {
         dismissNotification();
         navigate({ to: '/dashboard' });

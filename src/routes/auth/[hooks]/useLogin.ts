@@ -5,16 +5,17 @@ import { loginAction } from '../[actions]';
 export const useLogin = () => {
   const { showError } = useNotification();
 
-  const { mutate, isSuccess, isPending } = useMutation({
+  const { data, mutate, isSuccess, isPending } = useMutation({
     mutationKey: ['auth:login'],
     mutationFn: loginAction,
     onError: (error) => {
       console.log(error);
-      showError('Ocurrió un error al iniciar sesión, por favor intenta nuevamente.', true);
+      showError({ text: 'Ocurrió un error al iniciar sesión, por favor intenta nuevamente.', confirm: true });
     },
   });
 
   return {
+    data,
     mutate,
     isSuccess,
     isPending,

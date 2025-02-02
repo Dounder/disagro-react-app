@@ -20,3 +20,18 @@ export interface Role {
   id: number;
   name: string;
 }
+
+export interface AuthState {
+  user: User | null;
+  token: string | null;
+  status: AuthStatus;
+
+  setAuth: (auth: AuthResponse) => void;
+}
+
+export enum AuthStatus {
+  Authenticated = 'Authenticated',
+  Unauthenticated = 'Unauthenticated',
+  Checking = 'Checking',
+  SessionClosed = 'SessionClosed',
+}

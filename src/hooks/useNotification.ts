@@ -1,22 +1,28 @@
 import Swal from 'sweetalert2';
 
+interface Params {
+  text?: string;
+  confirm?: boolean;
+  timer?: number;
+}
+
 export const useNotification = () => {
-  const showSuccess = (message: string = 'Éxito', confirm: boolean = false) => {
+  const showSuccess = ({ text = 'Éxito', confirm = false, timer = 3000 }: Params) => {
     Swal.fire({
       icon: 'success',
       title: '¡Éxito!',
-      text: message,
-      timer: confirm ? 3000 : undefined,
+      text,
+      timer,
       showConfirmButton: confirm,
     });
   };
 
-  const showError = (message: string = 'Error', confirm: boolean = false) => {
+  const showError = ({ text = 'Error', confirm = false, timer }: Params) => {
     Swal.fire({
       icon: 'error',
       title: '¡Error!',
-      text: message,
-      timer: confirm ? 3000 : undefined,
+      text,
+      timer,
       showConfirmButton: confirm,
     });
   };

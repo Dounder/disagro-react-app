@@ -11,7 +11,7 @@ import FormStepHeader from './FormStepHeader';
 import SelectionCard from './SelectionCard';
 
 export default function Form() {
-  const { showLoading, closeLoading } = useNotification();
+  const { showLoading } = useNotification();
   const { mutate, isPending } = useAttendanceCreation();
 
   const validate = useAttendanceStore((state) => state.validate);
@@ -54,8 +54,8 @@ export default function Form() {
         <CustomBtn
           type="submit"
           text="CONFIRMAR ASISTENCIA"
-          className="flex justify-center cursor-pointer items-center text-2xl bg-secondary rounded-2xl font-bold text-white text-center px-4 py-3 transition duration-300 ease-in-out hover:bg-secondary/80">
-          <RightArrow fill="#fff" size="40px" />
+          className="flex justify-center cursor-pointer items-center text-lg bg-secondary rounded-2xl font-bold text-white text-center px-4 py-3 transition duration-300 ease-in-out hover:bg-secondary/80">
+          <RightArrow fill="#fff" size="20px" />
         </CustomBtn>
       </section>
     </form>
