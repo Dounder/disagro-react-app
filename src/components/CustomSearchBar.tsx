@@ -22,7 +22,7 @@ export default function CustomSearchBar() {
       />
       <button
         onClick={handleSearch}
-        className="absolute right-0 top-0 bottom-0 flex items-center justify-center p-4 rounded-full hover:bg-primary-300 transition-all duration-300 ease-in-out">
+        className="absolute right-0 top-0 bottom-0 flex items-center justify-center p-4 rounded-full hover:bg-primary transition-all duration-300 ease-in-out">
         <Search />
       </button>
     </div>
