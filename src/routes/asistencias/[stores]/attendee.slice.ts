@@ -10,6 +10,5 @@ export const createAttendeeSlice: StateCreator<AttendeeState> = (set) => ({
   setFirstName: (firstName: string) => set({ firstName }),
   setLastName: (lastName: string) => set({ lastName }),
   setEmail: (email: string) => set({ email }),
-  setAttendanceDate: (attendanceDate: string) =>
-    set({ attendanceDate: new Date(attendanceDate) }),
+  setAttendanceDate: (attendanceDate: string) => set({ attendanceDate: new Date(attendanceDate) }),
 });

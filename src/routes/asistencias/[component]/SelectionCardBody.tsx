@@ -20,14 +20,12 @@ export default function SelectionCardBody({ loading: isLoading, items }: Props) 
           {isLoading ? (
             <CustomLoader />
           ) : (
-            <>
-              {items.map((item, index) => (
-                <React.Fragment key={item.id}>
-                  <SelectionCardItem key={index} id={item.id} name={item.id} price={item.price} value={item.value} />
-                  {index !== items.length && <div className="w-11/12 h-[1px] mx-auto bg-black/10"></div>}
-                </React.Fragment>
-              ))}
-            </>
+            items.map((item, index) => (
+              <React.Fragment key={item.id}>
+                <SelectionCardItem {...item} />
+                {index !== items.length - 1 && <div className="w-11/12 h-[1px] mx-auto bg-black/10"></div>}
+              </React.Fragment>
+            ))
           )}
         </section>
       </div>
