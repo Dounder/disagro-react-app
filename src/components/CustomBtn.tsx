@@ -6,7 +6,7 @@ interface Props {
   type?: 'button' | 'submit' | 'reset';
 }
 
-export default function CustomBtn({ text, type, className = '', children, disabled }: Props) {
+export default function CustomBtn({ text, type = 'button', className = '', children, disabled }: Props) {
   return (
     <button type={type} disabled={disabled} className={className}>
       <span className="mr-2">{text}</span>
