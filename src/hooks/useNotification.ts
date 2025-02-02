@@ -31,7 +31,7 @@ export const useNotification = () => {
     });
   };
 
-  const closeLoading = () => {
+  const dismissNotification = () => {
     Swal.close();
   };
 
@@ -39,6 +39,6 @@ export const useNotification = () => {
     showSuccess,
     showError,
     showLoading,
-    closeLoading,
+    dismissNotification,
   };
 };
