@@ -1,17 +1,21 @@
+import { FormEvent, useEffect, useState } from 'react';
+
 import CustomBtn from '@/components/CustomBtn';
+import { useNotification } from '@/hooks';
 import RightArrow from '@/icons/RightArrow';
-import { FormEvent, useEffect } from 'react';
 import { useAttendanceCreation } from '../[hooks]';
 import { useAttendanceStore } from '../[stores]';
 import RegistrationCard from './AttendeeInfoCard';
 import FormSection from './FormSection';
 import FormStepHeader from './FormStepHeader';
 import SelectionCard from './SelectionCard';
-import { useNotification } from '@/hooks';
 
 export default function Form() {
   const { showLoading, closeLoading } = useNotification();
   const { mutate, isPending } = useAttendanceCreation();
+
+  const validate = useAttendanceStore((state) => state.validate);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const firstName = useAttendanceStore((state) => state.firstName);
   const lastName = useAttendanceStore((state) => state.lastName);
@@ -21,8 +25,15 @@ export default function Form() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    const { isValid, errors } = validate();
 
-    mutate({ firstName, lastName, email, attendanceDate, items });
+    if (!isValid) {
+      setErrors(errors);
+      return;
+    } else {
+      setErrors({});
+      mutate({ firstName, lastName, email, attendanceDate, items });
+    }
   };
 
   useEffect(() => {
@@ -33,11 +44,11 @@ export default function Form() {
     <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-8 md:grid-cols-2">
       <FormSection>
         <FormStepHeader title="Datos Personales" step={1} />
-        <RegistrationCard />
+        <RegistrationCard errors={errors} />
       </FormSection>
       <FormSection>
         <FormStepHeader step={2} title="Seleccione Servicios y Productos de su interés" />
-        <SelectionCard />
+        <SelectionCard errors={errors} />
       </FormSection>
       <section className="col-span-full flex justify-end">
         <CustomBtn

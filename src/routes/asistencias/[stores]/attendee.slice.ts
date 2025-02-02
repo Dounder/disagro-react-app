@@ -1,10 +1,10 @@
 import { StateCreator } from 'zustand';
 import { AttendeeState } from '../[interfaces]';
 
-export const createAttendeeSlice: StateCreator<AttendeeState> = (set) => ({
-  firstName: 'test',
-  lastName: 'test',
-  email: 'kafij48917@eluxeer.com',
+export const createAttendeeSlice: StateCreator<AttendeeState> = (set, get) => ({
+  firstName: '',
+  lastName: '',
+  email: '',
   attendanceDate: new Date(),
 
   setFirstName: (firstName: string) => set({ firstName }),

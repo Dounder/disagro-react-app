@@ -2,7 +2,11 @@ import CustomInput from '@/components/CustomInput';
 import { useAttendanceStore } from '../[stores]';
 import FormCard from './FormCard';
 
-export default function AttendeeInfoCard() {
+interface Props {
+  errors: Record<string, string>;
+}
+
+export default function AttendeeInfoCard({ errors }: Props) {
   const firstName = useAttendanceStore((state) => state.firstName);
   const lastName = useAttendanceStore((state) => state.lastName);
   const email = useAttendanceStore((state) => state.email);
@@ -22,6 +26,7 @@ export default function AttendeeInfoCard() {
           placeholder="Introduzca su nombre"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
+          error={errors.firstName}
         />
         <CustomInput
           id="lastName"
@@ -29,6 +34,7 @@ export default function AttendeeInfoCard() {
           placeholder="Introduzca su apellido"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          error={errors.lastName}
         />
         <CustomInput
           id="email"
@@ -36,6 +42,7 @@ export default function AttendeeInfoCard() {
           placeholder="Introduzca su correo electrónico"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          error={errors.email}
         />
         <CustomInput
           id="attendanceDate"
@@ -43,6 +50,7 @@ export default function AttendeeInfoCard() {
           type="datetime-local"
           value={attendanceDate.toISOString().slice(0, 16)}
           onChange={(e) => setAttendanceDate(e.target.value)}
+          error={errors.attendanceDate}
         />
       </section>
     </FormCard>
