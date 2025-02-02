@@ -19,6 +19,10 @@ export interface SelectionState {
   removeItem: (itemId: string) => void;
 }
 
+export interface ValidationState {
+  validate: () => { isValid: boolean; errors: Record<string, string> };
+}
+
 export interface CreateAttendance {
   firstName: string;
   lastName: string;

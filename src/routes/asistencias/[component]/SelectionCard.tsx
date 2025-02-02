@@ -9,7 +9,11 @@ import SelectionCardBody from './SelectionCardBody';
 import SelectionCardFooter from './SelectionCardFooter';
 import SelectionCardHeader from './SelectionCardHeader';
 
-export default function SelectionCard() {
+interface Props {
+  errors: Record<string, string>;
+}
+
+export default function SelectionCard({ errors }: Props) {
   const { products, loading: productLoading, refetch: refetchProducts } = useProducts();
   const { services, loading: servicesLoading, refetch: refetchServices } = useServices();
   const isLoading = productLoading || servicesLoading;
@@ -24,7 +28,7 @@ export default function SelectionCard() {
     <FormCard>
       <section className="w-full h-full">
         <SelectionCardHeader refetch={handleRefetch} />
-        <SelectionCardBody loading={isLoading} items={items} />
+        <SelectionCardBody loading={isLoading} items={items} error={errors.items} />
         <SelectionCardFooter />
       </section>
     </FormCard>

@@ -1,15 +1,7 @@
-import { ItemType } from '../[interfaces]';
+import { SelectionItem } from '../[interfaces]';
 import { useAttendanceStore } from '../[stores]';
 
-interface Props {
-  id: string;
-  value: string;
-  name: string;
-  price: string;
-  type: ItemType;
-}
-
-export default function SelectionCardItem(item: Props) {
+export default function SelectionCardItem(item: SelectionItem) {
   const items = useAttendanceStore((state) => state.items);
   const addItem = useAttendanceStore((state) => state.addItem);
   const removeItem = useAttendanceStore((state) => state.removeItem);
@@ -38,8 +30,8 @@ export default function SelectionCardItem(item: Props) {
           <section className="flex items-center justify-end">
             <p className="text-sm text-gray-500 font-semibold">
               Q.
-              {new Intl.NumberFormat('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(
-                Number(item.price)
+              {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(
+                item.price
               )}
             </p>
           </section>

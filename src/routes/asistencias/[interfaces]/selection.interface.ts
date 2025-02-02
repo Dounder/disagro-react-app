@@ -4,6 +4,6 @@ export interface SelectionItem {
   id: string;
   value: any;
   name: string;
-  price: string;
+  price: number;
   type: ItemType;
 }
