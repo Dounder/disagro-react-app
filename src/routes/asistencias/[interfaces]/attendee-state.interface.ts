@@ -1,3 +1,5 @@
+import { ItemSelection } from './selection.interface';
+
 export interface AttendeeState {
   firstName: string;
   lastName: string;
@@ -10,18 +12,9 @@ export interface AttendeeState {
   setAttendanceDate: (attendanceDate: string) => void;
 }
 
-export interface SelectionStateItem {
-  id: number;
-  price: string;
-}
-
 export interface SelectionState {
-  products: SelectionStateItem[];
-  services: SelectionStateItem[];
+  items: ItemSelection[];
 
-  addProduct: (product: SelectionStateItem) => void;
-  removeProduct: (productId: number) => void;
-
-  addService: (service: SelectionStateItem) => void;
-  removeService: (serviceId: number) => void;
+  addItem: (item: ItemSelection) => void;
+  removeItem: (itemId: string) => void;
 }

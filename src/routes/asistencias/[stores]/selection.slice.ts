@@ -2,14 +2,8 @@ import { StateCreator } from 'zustand';
 import { SelectionState } from '../[interfaces]';
 
 export const createSelectionSlice: StateCreator<SelectionState> = (set) => ({
-  products: [],
-  services: [],
+  items: [],
 
-  addProduct: (product) => set((state) => ({ products: [...state.products, product] })),
-  removeProduct: (productId) =>
-    set((state) => ({ products: state.products.filter((product) => product.id !== productId) })),
-
-  addService: (service) => set((state) => ({ services: [...state.services, service] })),
-  removeService: (serviceId) =>
-    set((state) => ({ services: state.services.filter((service) => service.id !== serviceId) })),
+  addItem: (item) => set((state) => ({ items: [...state.items, item] })),
+  removeItem: (itemId) => set((state) => ({ items: state.items.filter((item) => item.id !== itemId) })),
 });
