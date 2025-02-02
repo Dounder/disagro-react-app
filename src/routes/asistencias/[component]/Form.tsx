@@ -1,27 +1,33 @@
 import CustomBtn from '@/components/CustomBtn';
 import RightArrow from '@/icons/RightArrow';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useAttendanceCreation } from '../[hooks]';
 import { useAttendanceStore } from '../[stores]';
 import RegistrationCard from './AttendeeInfoCard';
 import FormSection from './FormSection';
 import FormStepHeader from './FormStepHeader';
 import SelectionCard from './SelectionCard';
+import { useNotification } from '@/hooks';
 
 export default function Form() {
+  const { showLoading, closeLoading } = useNotification();
+  const { mutate, isPending } = useAttendanceCreation();
+
   const firstName = useAttendanceStore((state) => state.firstName);
   const lastName = useAttendanceStore((state) => state.lastName);
   const email = useAttendanceStore((state) => state.email);
   const attendanceDate = useAttendanceStore((state) => state.attendanceDate);
   const items = useAttendanceStore((state) => state.items);
 
-  const { mutate, isPending, isSuccess } = useAttendanceCreation();
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     mutate({ firstName, lastName, email, attendanceDate, items });
   };
+
+  useEffect(() => {
+    isPending && showLoading();
+  }, [isPending]);
 
   return (
     <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-8 md:grid-cols-2">
