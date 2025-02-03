@@ -31,7 +31,10 @@ export default function CustomInputPassword({ label, id, placeholder, value, onC
           onChange={onChange}
         />
         <div className="absolute right-0 z-30 inset-y-1 flex items-center px-4">
-          <button type="button" className="z-30" onClick={() => setShow((prev) => !prev)}>
+          <button
+            type="button"
+            className="z-30 hover:bg-primary/10 cursor-pointer transition-all duration-300 ease-in-out rounded-full p-1"
+            onClick={() => setShow((prev) => !prev)}>
             {show ? <Show /> : <Hide />}
           </button>
         </div>
