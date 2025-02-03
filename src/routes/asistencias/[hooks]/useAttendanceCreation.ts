@@ -9,14 +9,17 @@ export const useAttendanceCreation = () => {
     mutationKey: ['attendance:create'],
     mutationFn: createAttendanceAction,
     onSuccess: () => {
-      showSuccess(
-        'Gracias por registrar tu asistencia, en breve te estará llegando un correo de confirmación y el link para acceder a la plataforma.',
-        true
-      );
+      showSuccess({
+        text: 'Gracias por registrar tu asistencia, en breve te estará llegando un correo de confirmación y el link para acceder a la plataforma.',
+        confirm: true,
+      });
     },
     onError: (error) => {
       console.log(error);
-      showError('Ocurrió un error al registrar tu asistencia, por favor intenta nuevamente.', true);
+      showError({
+        text: 'Ocurrió un error al registrar tu asistencia, por favor intenta nuevamente.',
+        confirm: true,
+      });
     },
   });
 

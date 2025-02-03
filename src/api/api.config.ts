@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/routes/auth/[store]/auth.store';
 import axios from 'axios';
 
 const api = axios.create({
