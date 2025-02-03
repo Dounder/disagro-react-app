@@ -34,6 +34,11 @@ function RootComponent() {
   if (authStatus === AuthStatus.Unauthenticated && PUBLIC_ROUTES.includes(routerState.location.pathname))
     return <Outlet />;
 
+  if (authStatus === AuthStatus.Unauthenticated && !PUBLIC_ROUTES.includes(routerState.location.pathname)) {
+    navigate({ to: '/auth/login', replace: true });
+    return <Outlet />;
+  }
+
   return (
     <>
       <Outlet />

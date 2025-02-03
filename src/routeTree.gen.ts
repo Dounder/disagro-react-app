@@ -19,14 +19,24 @@ import { Route as ProductosIndexImport } from './routes/productos/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
 import { Route as AsistenciasIndexImport } from './routes/asistencias/index'
+import { Route as DashboardLayoutImport } from './routes/dashboard/_layout'
 import { Route as AuthLayoutImport } from './routes/auth/_layout'
 import { Route as AuthLayoutLoginImport } from './routes/auth/_layout/login'
+import { Route as DashboardLayoutAsistenciasIndexImport } from './routes/dashboard/_layout/asistencias/index'
+import { Route as DashboardLayoutAsistenciasIdImport } from './routes/dashboard/_layout/asistencias/$id'
 
 // Create Virtual Routes
 
+const DashboardImport = createFileRoute('/dashboard')()
 const AuthImport = createFileRoute('/auth')()
 
 // Create/Update Routes
+
+const DashboardRoute = DashboardImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthRoute = AuthImport.update({
   id: '/auth',
@@ -53,9 +63,9 @@ const ProductosIndexRoute = ProductosIndexImport.update({
 } as any)
 
 const DashboardIndexRoute = DashboardIndexImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
-  getParentRoute: () => rootRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
 } as any)
 
 const AuthIndexRoute = AuthIndexImport.update({
@@ -70,6 +80,11 @@ const AsistenciasIndexRoute = AsistenciasIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const DashboardLayoutRoute = DashboardLayoutImport.update({
+  id: '/_layout',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
 const AuthLayoutRoute = AuthLayoutImport.update({
   id: '/_layout',
   getParentRoute: () => AuthRoute,
@@ -80,6 +95,20 @@ const AuthLayoutLoginRoute = AuthLayoutLoginImport.update({
   path: '/login',
   getParentRoute: () => AuthLayoutRoute,
 } as any)
+
+const DashboardLayoutAsistenciasIndexRoute =
+  DashboardLayoutAsistenciasIndexImport.update({
+    id: '/asistencias/',
+    path: '/asistencias/',
+    getParentRoute: () => DashboardLayoutRoute,
+  } as any)
+
+const DashboardLayoutAsistenciasIdRoute =
+  DashboardLayoutAsistenciasIdImport.update({
+    id: '/asistencias/$id',
+    path: '/asistencias/$id',
+    getParentRoute: () => DashboardLayoutRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -106,6 +135,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutImport
       parentRoute: typeof AuthRoute
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/_layout': {
+      id: '/dashboard/_layout'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardLayoutImport
+      parentRoute: typeof DashboardRoute
+    }
     '/asistencias/': {
       id: '/asistencias/'
       path: '/asistencias'
@@ -122,10 +165,10 @@ declare module '@tanstack/react-router' {
     }
     '/dashboard/': {
       id: '/dashboard/'
-      path: '/dashboard'
-      fullPath: '/dashboard'
+      path: '/'
+      fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof DashboardImport
     }
     '/productos/': {
       id: '/productos/'
@@ -147,6 +190,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/login'
       preLoaderRoute: typeof AuthLayoutLoginImport
       parentRoute: typeof AuthLayoutImport
+    }
+    '/dashboard/_layout/asistencias/$id': {
+      id: '/dashboard/_layout/asistencias/$id'
+      path: '/asistencias/$id'
+      fullPath: '/dashboard/asistencias/$id'
+      preLoaderRoute: typeof DashboardLayoutAsistenciasIdImport
+      parentRoute: typeof DashboardLayoutImport
+    }
+    '/dashboard/_layout/asistencias/': {
+      id: '/dashboard/_layout/asistencias/'
+      path: '/asistencias'
+      fullPath: '/dashboard/asistencias'
+      preLoaderRoute: typeof DashboardLayoutAsistenciasIndexImport
+      parentRoute: typeof DashboardLayoutImport
     }
   }
 }
@@ -177,25 +234,58 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface DashboardLayoutRouteChildren {
+  DashboardLayoutAsistenciasIdRoute: typeof DashboardLayoutAsistenciasIdRoute
+  DashboardLayoutAsistenciasIndexRoute: typeof DashboardLayoutAsistenciasIndexRoute
+}
+
+const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
+  DashboardLayoutAsistenciasIdRoute: DashboardLayoutAsistenciasIdRoute,
+  DashboardLayoutAsistenciasIndexRoute: DashboardLayoutAsistenciasIndexRoute,
+}
+
+const DashboardLayoutRouteWithChildren = DashboardLayoutRoute._addFileChildren(
+  DashboardLayoutRouteChildren,
+)
+
+interface DashboardRouteChildren {
+  DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardLayoutRoute: DashboardLayoutRouteWithChildren,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthLayoutRouteWithChildren
+  '/dashboard': typeof DashboardLayoutRouteWithChildren
   '/asistencias': typeof AsistenciasIndexRoute
   '/auth/': typeof AuthIndexRoute
-  '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
   '/productos': typeof ProductosIndexRoute
   '/servicios': typeof ServiciosIndexRoute
   '/auth/login': typeof AuthLayoutLoginRoute
+  '/dashboard/asistencias/$id': typeof DashboardLayoutAsistenciasIdRoute
+  '/dashboard/asistencias': typeof DashboardLayoutAsistenciasIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthIndexRoute
-  '/asistencias': typeof AsistenciasIndexRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/asistencias': typeof AsistenciasIndexRoute
   '/productos': typeof ProductosIndexRoute
   '/servicios': typeof ServiciosIndexRoute
   '/auth/login': typeof AuthLayoutLoginRoute
+  '/dashboard/asistencias/$id': typeof DashboardLayoutAsistenciasIdRoute
+  '/dashboard/asistencias': typeof DashboardLayoutAsistenciasIndexRoute
 }
 
 export interface FileRoutesById {
@@ -203,12 +293,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
   '/auth/_layout': typeof AuthLayoutRouteWithChildren
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/_layout': typeof DashboardLayoutRouteWithChildren
   '/asistencias/': typeof AsistenciasIndexRoute
   '/auth/': typeof AuthIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/productos/': typeof ProductosIndexRoute
   '/servicios/': typeof ServiciosIndexRoute
   '/auth/_layout/login': typeof AuthLayoutLoginRoute
+  '/dashboard/_layout/asistencias/$id': typeof DashboardLayoutAsistenciasIdRoute
+  '/dashboard/_layout/asistencias/': typeof DashboardLayoutAsistenciasIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -216,40 +310,49 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/dashboard'
     | '/asistencias'
     | '/auth/'
-    | '/dashboard'
+    | '/dashboard/'
     | '/productos'
     | '/servicios'
     | '/auth/login'
+    | '/dashboard/asistencias/$id'
+    | '/dashboard/asistencias'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
-    | '/asistencias'
     | '/dashboard'
+    | '/asistencias'
     | '/productos'
     | '/servicios'
     | '/auth/login'
+    | '/dashboard/asistencias/$id'
+    | '/dashboard/asistencias'
   id:
     | '__root__'
     | '/'
     | '/auth'
     | '/auth/_layout'
+    | '/dashboard'
+    | '/dashboard/_layout'
     | '/asistencias/'
     | '/auth/'
     | '/dashboard/'
     | '/productos/'
     | '/servicios/'
     | '/auth/_layout/login'
+    | '/dashboard/_layout/asistencias/$id'
+    | '/dashboard/_layout/asistencias/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
+  DashboardRoute: typeof DashboardRouteWithChildren
   AsistenciasIndexRoute: typeof AsistenciasIndexRoute
-  DashboardIndexRoute: typeof DashboardIndexRoute
   ProductosIndexRoute: typeof ProductosIndexRoute
   ServiciosIndexRoute: typeof ServiciosIndexRoute
 }
@@ -257,8 +360,8 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
+  DashboardRoute: DashboardRouteWithChildren,
   AsistenciasIndexRoute: AsistenciasIndexRoute,
-  DashboardIndexRoute: DashboardIndexRoute,
   ProductosIndexRoute: ProductosIndexRoute,
   ServiciosIndexRoute: ServiciosIndexRoute,
 }
@@ -275,8 +378,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/auth",
+        "/dashboard",
         "/asistencias/",
-        "/dashboard/",
         "/productos/",
         "/servicios/"
       ]
@@ -298,6 +401,21 @@ export const routeTree = rootRoute
         "/auth/_layout/login"
       ]
     },
+    "/dashboard": {
+      "filePath": "dashboard",
+      "children": [
+        "/dashboard/_layout",
+        "/dashboard/"
+      ]
+    },
+    "/dashboard/_layout": {
+      "filePath": "dashboard/_layout.tsx",
+      "parent": "/dashboard",
+      "children": [
+        "/dashboard/_layout/asistencias/$id",
+        "/dashboard/_layout/asistencias/"
+      ]
+    },
     "/asistencias/": {
       "filePath": "asistencias/index.tsx"
     },
@@ -306,7 +424,8 @@ export const routeTree = rootRoute
       "parent": "/auth"
     },
     "/dashboard/": {
-      "filePath": "dashboard/index.tsx"
+      "filePath": "dashboard/index.tsx",
+      "parent": "/dashboard"
     },
     "/productos/": {
       "filePath": "productos/index.tsx"
@@ -317,6 +436,14 @@ export const routeTree = rootRoute
     "/auth/_layout/login": {
       "filePath": "auth/_layout/login.tsx",
       "parent": "/auth/_layout"
+    },
+    "/dashboard/_layout/asistencias/$id": {
+      "filePath": "dashboard/_layout/asistencias/$id.tsx",
+      "parent": "/dashboard/_layout"
+    },
+    "/dashboard/_layout/asistencias/": {
+      "filePath": "dashboard/_layout/asistencias/index.tsx",
+      "parent": "/dashboard/_layout"
     }
   }
 }

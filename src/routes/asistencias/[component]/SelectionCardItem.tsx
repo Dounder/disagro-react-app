@@ -1,3 +1,4 @@
+import { CurrencyUtil } from '@/utils';
 import { SelectionItem } from '../[interfaces]';
 import { useAttendanceStore } from '../[stores]';
 
@@ -28,12 +29,7 @@ export default function SelectionCardItem(item: SelectionItem) {
             <p className="text-sm text-gray-500 capitalize">{item.type}</p>
           </section>
           <section className="flex items-center justify-end">
-            <p className="text-sm text-gray-500 font-semibold">
-              Q.
-              {new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(
-                item.price
-              )}
-            </p>
+            <p className="text-sm text-gray-500 font-semibold">{CurrencyUtil.format(item.price)}</p>
           </section>
         </section>
       </label>
