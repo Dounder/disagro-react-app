@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { ZodError } from 'zod';
 
 import CustomBtn from '@/components/CustomBtn';
@@ -7,9 +7,8 @@ import CustomInput from '@/components/CustomInput';
 import { useNotification } from '@/hooks';
 import LeftArrow from '@/icons/LeftArrow';
 import RightArrow from '@/icons/RightArrow';
-import { useLogin } from '../[hooks]';
 import { loginDto, loginSchema } from '../[schemas]';
-import { useAuthStore } from '../[store]/auth.store';
+import { useAuthStore } from '../[store]';
 
 export const Route = createFileRoute('/auth/_layout/login')({
   component: RouteComponent,
@@ -17,14 +16,13 @@ export const Route = createFileRoute('/auth/_layout/login')({
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const { showLoading, showSuccess, dismissNotification } = useNotification();
-  const { data, mutate, isSuccess, isPending } = useLogin();
-  const setAuth = useAuthStore((state) => state.setAuth);
+  const { showLoading, showError, showSuccess, dismissNotification } = useNotification();
+  const login = useAuthStore((state) => state.login);
 
-  const [login, setLogin] = useState<loginDto>({ email: '', password: '' });
+  const [loginForm, setLoginForm] = useState<loginDto>({ email: '', password: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     const { isValid, errors } = validate();
@@ -35,12 +33,22 @@ function RouteComponent() {
     }
 
     setErrors({});
-    mutate(login);
+
+    try {
+      showLoading();
+      await login(loginForm);
+
+      showSuccess({ text: 'Inicio de sesión exitoso', timer: 1000 });
+      navigate({ to: '/dashboard', replace: true });
+    } catch (error: any) {
+      console.log('Error: ', error);
+      showError({ text: error.message || 'Ocurrió un error inesperado' });
+    }
   };
 
   const validate = () => {
     try {
-      loginSchema.parse(login);
+      loginSchema.parse(loginForm);
 
       return { isValid: true, errors: {} };
     } catch (error) {
@@ -62,21 +70,6 @@ function RouteComponent() {
     }
   };
 
-  useEffect(() => {
-    if (isPending) showLoading();
-  }, [isPending]);
-
-  useEffect(() => {
-    if (isSuccess && data) {
-      setAuth(data);
-      showSuccess({ text: 'Inicio de sesión exitoso' });
-      setTimeout(() => {
-        dismissNotification();
-        navigate({ to: '/dashboard' });
-      }, 2000);
-    }
-  }, [isSuccess]);
-
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <h1 className="font-bold text-center text-2xl mb-5">Inicio de Sesión</h1>
@@ -85,15 +78,15 @@ function RouteComponent() {
           <CustomInput
             id="email"
             label="Email"
-            value={login.email}
-            onChange={(e) => setLogin({ ...login, email: e.target.value })}
+            value={loginForm.email}
+            onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
             error={errors.email}
           />
           <CustomInput
             id="password"
             label="Password"
-            value={login.password}
-            onChange={(e) => setLogin({ ...login, password: e.target.value })}
+            value={loginForm.password}
+            onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
             error={errors.password}
           />
           <CustomBtn

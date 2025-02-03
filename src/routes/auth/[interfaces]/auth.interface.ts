@@ -1,3 +1,5 @@
+import { loginDto } from '../[schemas]';
+
 export interface AuthResponse {
   user: User;
   token: string;
@@ -26,7 +28,9 @@ export interface AuthState {
   token: string | null;
   status: AuthStatus;
 
-  setAuth: (auth: AuthResponse) => void;
+  login: (loginDto: loginDto) => Promise<void>;
+  logout: () => void;
+  checkAuthStatus: () => Promise<void>;
 }
 
 export enum AuthStatus {

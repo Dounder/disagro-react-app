@@ -5,5 +5,5 @@ export const Route = createFileRoute('/auth/')({
 });
 
 function LayoutComponent() {
-  return <Navigate to="/auth/login" />;
+  return <Navigate to="/auth/login" replace />;
 }
