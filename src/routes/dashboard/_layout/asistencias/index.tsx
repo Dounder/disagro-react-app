@@ -1,7 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useUserAttendances } from './[hooks]/useUserAttendances';
-import { CurrencyUtil, DateUtil } from '@/utils';
 import AttendanceCard from './[components]/AttendanceCard';
+import { useUserAttendances } from './[hooks]/useUserAttendances';
 
 export const Route = createFileRoute('/dashboard/_layout/asistencias/')({
   component: RouteComponent,
