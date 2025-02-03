@@ -10,6 +10,8 @@ export interface AttendeeState {
   setLastName: (lastName: string) => void;
   setEmail: (email: string) => void;
   setAttendanceDate: (attendanceDate: string) => void;
+
+  resetAttendeeState: () => void;
 }
 
 export interface SelectionState {
@@ -17,6 +19,8 @@ export interface SelectionState {
 
   addItem: (item: SelectionItem) => void;
   removeItem: (itemId: string) => void;
+
+  resetSelectionState: () => void;
 }
 
 export interface ValidationState {

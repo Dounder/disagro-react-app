@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useProducts } from '@/routes/productos/[hooks]';
 import { useServices } from '@/routes/servicios/[hooks]';
@@ -8,27 +8,33 @@ import FormCard from './FormCard';
 import SelectionCardBody from './SelectionCardBody';
 import SelectionCardFooter from './SelectionCardFooter';
 import SelectionCardHeader from './SelectionCardHeader';
+import { SelectionItem } from '../[interfaces]';
 
 interface Props {
   errors: Record<string, string>;
 }
 
 export default function SelectionCard({ errors }: Props) {
-  const { products, loading: productLoading, refetch: refetchProducts } = useProducts();
-  const { services, loading: servicesLoading, refetch: refetchServices } = useServices();
+  const { products, loading: productLoading } = useProducts();
+  const { services, loading: servicesLoading } = useServices();
   const isLoading = productLoading || servicesLoading;
   const items = useMemo(() => transformSelectionItems(products, services), [products, services]);
+  const [filteredItems, setFilteredItems] = useState<SelectionItem[]>([]);
 
-  const handleRefetch = () => {
-    refetchProducts();
-    refetchServices();
+  const handleSearch = (search: string) => {
+    const filtered = items.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
+    setFilteredItems(filtered);
   };
+
+  useEffect(() => {
+    setFilteredItems(items);
+  }, [items]);
 
   return (
     <FormCard>
       <section className="w-full h-full">
-        <SelectionCardHeader refetch={handleRefetch} />
-        <SelectionCardBody loading={isLoading} items={items} error={errors.items} />
+        <SelectionCardHeader onSearch={handleSearch} />
+        <SelectionCardBody loading={isLoading} items={filteredItems} error={errors.items} />
         <SelectionCardFooter />
       </section>
     </FormCard>
