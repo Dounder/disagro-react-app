@@ -21,7 +21,10 @@ export const useAuthStore = create<AuthState>()(
       }
     },
 
-    logout: () => set({ status: AuthStatus.SessionClosed, user: null, token: null }),
+    logout: () => {
+      localStorage.removeItem('token');
+      set({ status: AuthStatus.Unauthenticated, user: null, token: null });
+    },
 
     checkAuthStatus: async () => {
       try {
