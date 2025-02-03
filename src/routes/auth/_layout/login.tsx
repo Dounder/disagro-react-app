@@ -4,6 +4,7 @@ import { ZodError } from 'zod';
 
 import CustomBtn from '@/components/CustomBtn';
 import CustomInput from '@/components/CustomInput';
+import CustomInputPassword from '@/components/CustomInputPassword';
 import { useNotification } from '@/hooks';
 import LeftArrow from '@/icons/LeftArrow';
 import RightArrow from '@/icons/RightArrow';
@@ -73,7 +74,7 @@ function RouteComponent() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <h1 className="font-bold text-center text-2xl mb-5">Inicio de Sesión</h1>
-      <div className="bg-white shadow w-[40rem] rounded-lg divide-y divide-gray-200">
+      <div className="bg-white shadow w-full sm:w-[25rem] md:w-[30rem] lg:w-[40rem] rounded-lg divide-y divide-gray-200">
         <form onSubmit={handleSubmit} className="px-5 py-7 flex flex-col gap-6">
           <CustomInput
             id="email"
@@ -82,7 +83,7 @@ function RouteComponent() {
             onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
             error={errors.email}
           />
-          <CustomInput
+          <CustomInputPassword
             id="password"
             label="Password"
             value={loginForm.password}
