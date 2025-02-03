@@ -1,6 +1,11 @@
+import { AuthStatus } from '@/routes/auth/[interfaces]';
+import { useAuthStore } from '@/routes/auth/[store]';
 import { Link } from '@tanstack/react-router';
 
 export default function Header() {
+  const status = useAuthStore((state) => state.status);
+  const isAuthenticated = status === AuthStatus.Authenticated;
+
   return (
     <header className="p-4 h-24 bg-primary text-white flex justify-between items-center">
       <section className="">
@@ -9,9 +14,9 @@ export default function Header() {
       </section>
       <section className="">
         <Link
-          to="/auth/login"
+          to={isAuthenticated ? '/dashboard' : '/auth/login'}
           className="h-10 flex justify-center cursor-pointer items-center font-bold text-white hover:underline transition duration-300 ease-in-out">
-          <span>Iniciar Sesión</span>
+          <span>{isAuthenticated ? 'Dashboard' : 'Iniciar sesión'}</span>
         </Link>
       </section>
     </header>
