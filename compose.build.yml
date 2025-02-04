@@ -1,0 +1,16 @@
+services:
+  latest:
+    build:
+      context: .
+      dockerfile: dockerfile.prod
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+    image: drglasdou/disagro_react:latest
+
+  version:
+    build:
+      context: .
+      dockerfile: dockerfile.prod
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+    image: drglasdou/disagro_react:1
