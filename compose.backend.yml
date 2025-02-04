@@ -1,7 +1,7 @@
 services:
   api:
     container_name: disagro_api
-    image: disagro_api
+    image: drglasdou/disagro_node
     depends_on:
       - db
     ports:
