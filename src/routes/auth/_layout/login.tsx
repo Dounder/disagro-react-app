@@ -99,7 +99,7 @@ function RouteComponent() {
         </form>
       </div>
       <div className="py-5">
-        <Link to="/">
+        <Link to="/asistencias">
           <button className="transition duration-200 px-5 py-4 cursor-pointer text-sm rounded-lg text-gray-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-300 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset ">
             <LeftArrow />
             <span className="inline-block ml-1">Regresar</span>
